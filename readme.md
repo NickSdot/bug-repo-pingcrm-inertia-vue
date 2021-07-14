@@ -16,11 +16,11 @@ This is a fork of the Inertia PingCRM demo. It serves to demonstrate a bug which
 6. Open the console of your browser dev tools. You will see:
 
 ```
-Access to XMLHttpRequest at 'https://pingcrm.devx/organizations?page=3' from origin 'https://pingcrm.devx:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+Access to XMLHttpRequest at 'https://pingcrm.test/organizations?page=3' from origin 'https://pingcrm.test:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
 
 ```
-xhr.js:177 GET https://pingcrm.devx/organizations?page=3 net::ERR_FAILED
+xhr.js:177 GET https://pingcrm.test/organizations?page=3 net::ERR_FAILED
 dispatchXhrRequest @ xhr.js:177
 xhrAdapter @ xhr.js:13
 dispatchRequest @ dispatchRequest.js:52
