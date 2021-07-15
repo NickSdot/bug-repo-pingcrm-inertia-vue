@@ -6,7 +6,12 @@ let webpack = require('webpack')
 
 // The mix script:
 mix.browserSync({
-  proxy: 'https://' + domain,
+  proxy: {
+    target: 'https://' + domain,
+    // proxyOptions: {
+    //   changeOrigin: false,
+    // },
+  },
   host: domain,
   open: 'external',
   https: {

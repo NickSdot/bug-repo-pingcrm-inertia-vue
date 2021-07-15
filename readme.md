@@ -1,12 +1,12 @@
 # Ping CRM fork to show port bug
 
-This is a fork of the Inertia PingCRM demo. It serves to demonstrate a bug which leads routes to lose the port.
+This is a fork of the Inertia PingCRM demo. It serves to demonstrate a bug which leads routes to lose the port. It is **important to read** the section 'Reproduce Issue' and the edited section 'Installation', which is now matching the specific case.
 
 **Only edited files are:**
 - package.json (installed BrowserSync)
 - webpack.mix.js (setup for BrowserSync and stuff)
 
-## Reproduce the issue
+## Reproduce Issue
 
 1. Navigate to https://pingcrm.test:3000/organizations.
 2. Check the pagination links (correctly contains port) with mouse over.
@@ -36,8 +36,51 @@ createError.js:16 Uncaught (in promise) Error: Network Error
     at createError (createError.js:16)
     at XMLHttpRequest.handleError (xhr.js:84)
 ```
+7. Go to `webpack.mix.js` and change:
 
-## Installation
+```js
+  proxy: {
+    target: 'https://' + domain,
+    // proxyOptions: {
+    //     changeOrigin: false,
+    // },
+  }
+```
+to:
+
+```js
+  proxy: {
+    target: 'https://' + domain, 
+    proxyOptions: {
+         changeOrigin: false,
+    }
+  },
+```
+8. Run `npm run watch` to restart the server
+9. Go to https://pingcrm.test:3000/organizations.
+10. The page does not display correctly due to JS errors. Check the console, you will find:
+
+```js
+TypeError: Failed to construct 'URL': Invalid URL
+    at Object.h [as mergeDataIntoQueryString] (index.js:1)
+    at render (index.js:1)
+    at createFunctionalComponent (vue.esm.js:3067)
+    at createComponent (vue.esm.js:3240)
+    at _createElement (vue.esm.js:3431)
+    at createElement (vue.esm.js:3362)
+    at vm._c (vue.esm.js:3500)
+    at Proxy.render (templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Shared/Layout.vue?vue&type=template&id=6bf30086&:140)
+    at VueComponent.Vue._render (vue.esm.js:3554)
+    at VueComponent.updateComponent (vue.esm.js:4072)
+```
+
+The reason for this is, that the pagination links now contain the port twice. Example:
+
+`"https://pingcrm.devx:3000:3000/organizations?page=1"`
+
+I am not certain why this happens, but since the first initial page load provides correctly by Laravel generated links, I assume it must be Inertia related. Also, worth to note that this is happening only with the pagination links.
+
+## Installation (EDITED to match the case)
 
 Clone the repo locally:
 
