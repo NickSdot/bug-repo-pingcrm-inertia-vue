@@ -1,5 +1,5 @@
 const mix = require('laravel-mix')
-const domain = 'pingcrm.devx'
+const domain = 'pingcrm.test'
 const homedir = require('os').homedir()
 const path = require('path')
 let webpack = require('webpack')
