@@ -1,18 +1,19 @@
 const mix = require('laravel-mix')
 const domain = 'pingcrm.devx'
 const homedir = require('os').homedir()
-const path = require('path')
-let webpack = require('webpack')
 
 // The mix script:
 mix.browserSync({
-  proxy: 'https://' + domain,
-  host: domain,
-  open: 'external',
-  https: {
-    key: homedir + '/.config/valet/Certificates/' + domain + '.key',
-    cert: homedir + '/.config/valet/Certificates/' + domain + '.crt',
-  },
+    proxy: {
+        target: 'https://' + domain,
+    },
+    host: domain,
+    open: 'external',
+    https: {
+        key: homedir + '/.config/valet/Certificates/' + domain + '.key',
+        cert: homedir + '/.config/valet/Certificates/' + domain + '.crt',
+    },
+    notify: false,
 })
 
 /*
@@ -34,21 +35,8 @@ mix.js('resources/js/app.js', 'public/js')
     require('tailwindcss'),
     require('autoprefixer'),
   ])
-  .webpackConfig({
-    resolve: {
-      alias: {
-        '@': path.resolve('resources/js'),
-      },
-    },
-    plugins: [
-      new webpack.DefinePlugin({
-        __VUE_OPTIONS_API__: true,
-        __VUE_PROD_DEVTOOLS__: false,
-      }),
-    ],
-  }).sourceMaps()
+  .webpackConfig(require('./webpack.config')).sourceMaps()
 
 if (mix.inProduction()) {
   mix.version()
 }
-

@@ -2,9 +2,7 @@
 
 This is a fork of the Inertia PingCRM demo. It serves to demonstrate a bug which leads routes to lose the port.
 
-**Only edited files are:**
-- package.json (installed BrowserSync)
-- webpack.mix.js (setup for BrowserSync and stuff)
+**The app got updated to Vue 3:**
 
 ## Reproduce the issue
 
